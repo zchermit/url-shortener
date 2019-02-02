@@ -1,0 +1,42 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <div>
+        <label for="url">Url:</label><input type="url" id="url">
+        <button id="btn_get_short_url">Get short url</button>
+    </div>
+    <div>
+        Short url:<input id="short_url">
+    </div>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('#btn_get_short_url').on('click', function () {
+                let url = $('#url').val().trim();
+
+                if ('' === url) {
+                    alert('Url is empty');
+                } else {
+                    $.ajax({
+                        url: '/getShortUrl',
+                        dataType: 'json',
+                        type: 'post',
+                        data: {
+                            url: url
+                        },
+                        success: function (response) {
+                            console.log(response);
+                            if (response.status) {
+                                $('#short_url').val(response.short_url);
+                            } else {
+                                alert(response.errors.join('.'));
+                            }
+                        },
+                        error: function (XMLHttpRequest) {
+                            alert("Something is wrong. Please try again later or contact our support team.");
+                        }
+                    });
+                }
+            })
+        });
+    </script>
+{% endblock %}

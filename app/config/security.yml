@@ -1,0 +1,28 @@
+# To get started with security, check out the documentation:
+# http://symfony.com/doc/current/security.html
+security:
+
+    # http://symfony.com/doc/current/security.html#b-configuring-how-users-are-loaded
+    providers:
+        in_memory:
+            memory: ~
+
+    firewalls:
+        # disables authentication for assets and the profiler, adapt it according to your needs
+        dev:
+            pattern: ^/(_(profiler|wdt)|css|images|js)/
+            security: false
+
+        install:
+            pattern: ^/install
+            security: false
+
+        main:
+            anonymous: ~
+
+    role_hierarchy:
+        ROLE_ADMIN: ROLE_OPERATOR
+        ROLE_SUPER_ADMIN: [ROLE_ADMIN]
+
+    access_control:
+        - { path: .*, roles: IS_AUTHENTICATED_ANONYMOUSLY, methods: [OPTIONS] }

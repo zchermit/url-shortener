@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8"/>
+    <title>{% block title %}Welcome!{% endblock %}</title>
+    <script src="https://code.jquery.com/jquery-1.12.4.min.js" integrity="sha256-ZosEbRLbNQzLpnKIkEdrPv7lOy9C27hHQ+Xp8a4MxAQ=" crossorigin="anonymous"></script>
+    {% block stylesheets %}{% endblock %}
+    {% block head_javascripts %}{% endblock %}
+</head>
+<body>
+{% include ':default:header.html.twig' %}
+{% block body %}{% endblock %}
+{% block javascripts %}{% endblock %}
+{% include ':default:footer.html.twig' %}
+</body>
+</html>

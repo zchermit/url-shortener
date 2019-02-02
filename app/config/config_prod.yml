@@ -1,0 +1,37 @@
+imports:
+    - { resource: config.yml }
+
+#doctrine:
+#    orm:
+#        metadata_cache_driver: apc
+#        result_cache_driver: apc
+#        query_cache_driver: apc
+
+monolog:
+    handlers:
+        main:
+            type: fingers_crossed
+            action_level: error
+            excluded_404s:
+                - ^/
+            handler: grouped
+        grouped:
+            type:    group
+            members: [streamed, deduplicated]
+        streamed:
+            type: stream
+            path: '%kernel.logs_dir%/%kernel.environment%.log'
+            level: debug
+        deduplicated:
+            type: deduplication
+            handler: swift
+        swift:
+            type:       swift_mailer
+            from_email: 'url-shortener@example.com'
+            to_email:   'dev@example.com'
+            subject:    'An Error Occurred! %%message%%'
+            level:      debug
+            formatter:  monolog.formatter.html
+            content_type: text/html
+        console:
+            type: console
